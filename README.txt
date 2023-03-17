@@ -1,31 +1,14 @@
-Exar/MxL USB Serial Driver
+Exar USB Serial Driver
 ======================
-Version 1D  2021/9/14
-	Add GPIO operation support
-	Use dynamic allocate memory for usb_control_msg
-	Avoid re-configuring the flow mode if no changes
-	Remove obsoleted flag check for newer version
-	Fix XR21B142x incorrect register mapping
-	Fix baud rate setting for Big-Endian system
-	XR2280x wide mode setting
-	Clean up ident
-	
-Version 1C  2017/1/11
-	Add the 9-bit mode support.
-	Disable the debug messages.
-
-Version 1B, 11/6/2015
-	Fixed Bug: The conditional logic to support kernel 3.9 was incorrect(line 396 in xr_usb_serial_common.c). 
-
 Version 1A, 1/9/2015
 
-This driver will work with any USB UART function in these Exar/MxL devices:
+This driver will work with any USB UART function in these Exar devices:
 	XR21V1410/1412/1414
 	XR21B1411
 	XR21B1420/1422/1424
 	XR22801/802/804
 
-The source code has been tested on various Linux kernels from 3.6.x to 5.11.x.  
+The source code has been tested on various Linux kernels from 3.6.x to 3.17.x.  
 This may also work with newer kernels as well.  
 
 
@@ -37,6 +20,15 @@ Installation
 	# make
 	# insmod ./xr_usb_serial_common.ko
 
+* Alternativley install via DKMS
+	# cp -a ../xr_usb_serial_common-1a /usr/src/
+	# dkms add -m xr_usb_serial_common -v 1a
+	# dkms build -m xr_usb_serial_common -v 1a
+	# dkms install -m xr_usb_serial_common -v 1a
+
+* Ensure that thecdc-acm module is not loaded (assumig that it is not needed)
+	# echo blacklist cdc-acm > /etc/modprobe.d/blacklist-cdc-acm.conf 
+	# update-initramfs -u
 
 * Plug the device into the USB host.  You should see up to four devices created,
   typically /dev/ttyXRUSB[0-3].

@@ -26,7 +26,7 @@
  * Major and minor numbers.
  */
 
-#define XR_USB_SERIAL_TTY_MAJOR 	266
+#define XR_USB_SERIAL_TTY_MAJOR		266
 #define XR_USB_SERIAL_TTY_MINORS	32
 
 /*
@@ -49,7 +49,7 @@
 #define XR_USB_SERIAL_CTRL_DCD		0x01
 #define XR_USB_SERIAL_CTRL_DSR		0x02
 #define XR_USB_SERIAL_CTRL_BRK		0x04
-#define XR_USB_SERIAL_CTRL_RI  		0x08
+#define XR_USB_SERIAL_CTRL_RI		0x08
 
 #define XR_USB_SERIAL_CTRL_FRAMING	0x10
 #define XR_USB_SERIAL_CTRL_PARITY	0x20
@@ -69,11 +69,6 @@
  */
 #define XR_USB_SERIAL_NW  16
 #define XR_USB_SERIAL_NR  16
-
-#define RAMCTL_BUFFER_PARITY                               0x1
-#define RAMCTL_BUFFER_BREAK                                0x2
-#define RAMCTL_BUFFER_FRAME                                0x4
-#define RAMCTL_BUFFER_OVERRUN                              0x8
 
 struct xr_usb_serial_wb {
 	unsigned char *buf;
@@ -113,7 +108,7 @@ struct xr_usb_serial {
 	struct usb_device *dev;				/* the corresponding usb device */
 	struct usb_interface *control;			/* control interface */
 	struct usb_interface *data;			/* data interface */
-	struct tty_port port;			 	/* our tty port data */
+	struct tty_port port;				/* our tty port data */
 	struct urb *ctrlurb;				/* urbs */
 	u8 *ctrl_buffer;				/* buffers of urbs */
 	dma_addr_t ctrl_dma;				/* dma handles of buffers */
@@ -147,51 +142,41 @@ struct xr_usb_serial {
 	unsigned int throttled:1;			/* actually throttled */
 	unsigned int throttle_req:1;			/* throttle requested */
 	u8 bInterval;
-	struct xr_usb_serial_wb *delayed_wb;			/* write queued for a device about to be woken */
+	struct xr_usb_serial_wb *delayed_wb;		/* write queued for a device about to be woken */
 	unsigned int channel;
-	int           preciseflags; /* USB: wide mode, TTY: flags per character */
-	int           trans9;   /* USB: wide mode, serial 9N1 */
-	int           have_extra_byte;
-	int           extra_byte;
-	
 	unsigned short DeviceVendor;
 	unsigned short DeviceProduct;
 	struct reg_addr_map reg_map;
-#ifdef CONFIG_GPIOLIB
-	struct gpio_chip xr_gpio;
-	int rv_gpio_created;
-#endif
 };
 
 #define CDC_DATA_INTERFACE_TYPE	0x0a
 
 /* constants describing various quirks and errors */
-#define NO_UNION_NORMAL  		1
+#define NO_UNION_NORMAL			1
 #define SINGLE_RX_URB			2
-#define NO_CAP_LINE      		4
-#define NOT_A_MODEM      		8
+#define NO_CAP_LINE			4
+#define NOT_A_MODEM			8
 #define NO_DATA_INTERFACE		16
 #define IGNORE_DEVICE			32
 
 
-#define UART_ENABLE_TX			1
-#define UART_ENABLE_RX			2
+#define UART_ENABLE_TX                      1
+#define UART_ENABLE_RX                      2
 
-#define UART_GPIO_CLR_DTR		0x8
-#define UART_GPIO_SET_DTR		0x8
-#define UART_GPIO_CLR_RTS		0x20         
-#define UART_GPIO_SET_RTS		0x20
+#define UART_GPIO_CLR_DTR                0x08
+#define UART_GPIO_SET_DTR                0x08
+#define UART_GPIO_CLR_RTS                0x20
+#define UART_GPIO_SET_RTS                0x20
 
-#define LOOPBACK_ENABLE_TX_RX		1
-#define LOOPBACK_ENABLE_RTS_CTS 	2
-#define LOOPBACK_ENABLE_DTR_DSR 	4
+#define LOOPBACK_ENABLE_TX_RX               1
+#define LOOPBACK_ENABLE_RTS_CTS             2
+#define LOOPBACK_ENABLE_DTR_DSR             4
 
-#define UART_FLOW_MODE_NONE		0x0
-#define UART_FLOW_MODE_HW		0x1
-#define UART_FLOW_MODE_SW		0x2
+#define UART_FLOW_MODE_NONE               0x0
+#define UART_FLOW_MODE_HW                 0x1
+#define UART_FLOW_MODE_SW                 0x2
 
-#define UART_GPIO_MODE_SEL_GPIO  	0x0
-#define UART_GPIO_MODE_SEL_RTS_CTS	0x1
+#define UART_GPIO_MODE_SEL_GPIO           0x0
+#define UART_GPIO_MODE_SEL_RTS_CTS        0x1
 
-#define XR2280x_FUNC_MGR_OFFSET 	0x40
-
+#define XR2280x_FUNC_MGR_OFFSET          0x40
